@@ -8,6 +8,10 @@ include = ["beeref*"]
 [tool.setuptools.package-data]
 "*" = ["*.html", "*.png"]
 
+[tool.setuptools.data-files]
+"share/applications" = ["BeeRef.desktop"]
+"share/icons/hicolor/scalable/apps/" = ["beeref/assets/beeref.svg"]
+
 [project]
 name = "BeeRef"
 version = "0.3.4-dev"
