@@ -1,13 +1,13 @@
 from unittest.mock import patch, MagicMock
 
-from PyQt6 import QtCore
+from PyQt5 import QtCore
 
 from beeref.__main__ import BeeRefMainWindow, main
 from beeref.assets import BeeAssets
 from beeref.view import BeeGraphicsView
 
 
-@patch('PyQt6.QtWidgets.QWidget.show')
+@patch('PyQt5.QtWidgets.QWidget.show')
 def test_beeref_mainwindow_init(show_mock, qapp):
     window = BeeRefMainWindow(qapp)
     assert window.windowTitle() == 'BeeRef'

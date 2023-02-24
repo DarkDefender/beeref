@@ -18,7 +18,7 @@
 import logging
 import os.path
 
-from PyQt6 import QtGui, QtWidgets
+from PyQt5 import QtGui, QtWidgets
 
 
 logger = logging.getLogger(__name__)

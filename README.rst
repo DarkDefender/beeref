@@ -82,4 +82,4 @@ Options for exporting from inside BeeRef are planned, but the above always works
 Notes for developers
 --------------------
 
-BeeRef is written in Python and PyQt6. For more info, see `CONTRIBUTING.rst <https://github.com/rbreu/beeref/blob/main/CONTRIBUTING.rst>`_.
+BeeRef is written in Python and PyQt5. For more info, see `CONTRIBUTING.rst <https://github.com/rbreu/beeref/blob/main/CONTRIBUTING.rst>`_.

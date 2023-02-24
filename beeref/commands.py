@@ -13,10 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with BeeRef.  If not, see <https://www.gnu.org/licenses/>.
 
-from PyQt6 import QtCore, QtGui
+from PyQt5 import QtCore, QtWidgets
 
 
-class InsertItems(QtGui.QUndoCommand):
+class InsertItems(QtWidgets.QUndoCommand):
 
     def __init__(self, scene, items, position=None, ignore_first_redo=False):
         super().__init__('Insert items')
@@ -49,7 +49,7 @@ class InsertItems(QtGui.QUndoCommand):
                 item.setPos(pos)
 
 
-class DeleteItems(QtGui.QUndoCommand):
+class DeleteItems(QtWidgets.QUndoCommand):
 
     def __init__(self, scene, items):
         super().__init__('Delete items')
@@ -67,7 +67,7 @@ class DeleteItems(QtGui.QUndoCommand):
             self.scene.addItem(item)
 
 
-class MoveItemsBy(QtGui.QUndoCommand):
+class MoveItemsBy(QtWidgets.QUndoCommand):
 
     def __init__(self, items, delta, ignore_first_redo=False):
         super().__init__('Move items')
@@ -87,7 +87,7 @@ class MoveItemsBy(QtGui.QUndoCommand):
             item.moveBy(-self.delta.x(), -self.delta.y())
 
 
-class ScaleItemsBy(QtGui.QUndoCommand):
+class ScaleItemsBy(QtWidgets.QUndoCommand):
     """Scale items by a given factor around the given anchor."""
 
     def __init__(self, items, factor, anchor, ignore_first_redo=False):
@@ -111,7 +111,7 @@ class ScaleItemsBy(QtGui.QUndoCommand):
                           item.mapFromScene(self.anchor))
 
 
-class RotateItemsBy(QtGui.QUndoCommand):
+class RotateItemsBy(QtWidgets.QUndoCommand):
     """Rotate items by a given delta around the given anchor."""
 
     def __init__(self, items, delta, anchor, ignore_first_redo=False):
@@ -136,7 +136,7 @@ class RotateItemsBy(QtGui.QUndoCommand):
                              item.mapFromScene(self.anchor))
 
 
-class NormalizeItems(QtGui.QUndoCommand):
+class NormalizeItems(QtWidgets.QUndoCommand):
 
     def __init__(self, items, scale_factors):
         super().__init__('Normalize items')
@@ -154,7 +154,7 @@ class NormalizeItems(QtGui.QUndoCommand):
             item.setScale(factor, item.center)
 
 
-class FlipItems(QtGui.QUndoCommand):
+class FlipItems(QtWidgets.QUndoCommand):
 
     def __init__(self, items, anchor, vertical):
         super().__init__('Flip items')
@@ -170,7 +170,7 @@ class FlipItems(QtGui.QUndoCommand):
         self.redo()
 
 
-class ResetScale(QtGui.QUndoCommand):
+class ResetScale(QtWidgets.QUndoCommand):
 
     def __init__(self, items):
         super().__init__('Reset Scale')
@@ -187,7 +187,7 @@ class ResetScale(QtGui.QUndoCommand):
             item.setScale(scale_factor, anchor=item.center)
 
 
-class ResetRotation(QtGui.QUndoCommand):
+class ResetRotation(QtWidgets.QUndoCommand):
 
     def __init__(self, items):
         super().__init__('Reset Rotation')
@@ -204,7 +204,7 @@ class ResetRotation(QtGui.QUndoCommand):
             item.setRotation(rotation, anchor=item.center)
 
 
-class ResetFlip(QtGui.QUndoCommand):
+class ResetFlip(QtWidgets.QUndoCommand):
 
     def __init__(self, items):
         super().__init__('Reset Flip')
@@ -223,7 +223,7 @@ class ResetFlip(QtGui.QUndoCommand):
                 item.do_flip(anchor=item.center)
 
 
-class ResetCrop(QtGui.QUndoCommand):
+class ResetCrop(QtWidgets.QUndoCommand):
 
     def __init__(self, items):
         super().__init__('Reset Crop')
@@ -240,7 +240,7 @@ class ResetCrop(QtGui.QUndoCommand):
             item.crop = crop
 
 
-class ResetTransforms(QtGui.QUndoCommand):
+class ResetTransforms(QtWidgets.QUndoCommand):
 
     def __init__(self, items):
         super().__init__('Reset All Transformations')
@@ -274,7 +274,7 @@ class ResetTransforms(QtGui.QUndoCommand):
                 item.crop = old['crop']
 
 
-class ArrangeItems(QtGui.QUndoCommand):
+class ArrangeItems(QtWidgets.QUndoCommand):
 
     def __init__(self, scene, items, positions):
         super().__init__('Arrange items')
@@ -296,7 +296,7 @@ class ArrangeItems(QtGui.QUndoCommand):
             item.setPos(pos)
 
 
-class CropItem(QtGui.QUndoCommand):
+class CropItem(QtWidgets.QUndoCommand):
     def __init__(self, item, crop):
         super().__init__('Crop item')
         self.item = item

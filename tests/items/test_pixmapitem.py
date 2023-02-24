@@ -1,8 +1,8 @@
 import pytest
 from unittest.mock import patch, MagicMock
 
-from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtCore import Qt
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
 
 from beeref.items import BeePixmapItem, item_registry
 
@@ -362,7 +362,7 @@ def test_exit_crop_mode_not_confirmed(view, item):
     view.scene.undo_stack.canUndo() is False
 
 
-@patch('PyQt6.QtWidgets.QGraphicsPixmapItem.keyPressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsPixmapItem.keyPressEvent')
 def test_key_press_event_return(key_mock, qapp, item):
     item.exit_crop_mode = MagicMock()
     event = MagicMock()
@@ -372,7 +372,7 @@ def test_key_press_event_return(key_mock, qapp, item):
     key_mock.assert_not_called()
 
 
-@patch('PyQt6.QtWidgets.QGraphicsPixmapItem.keyPressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsPixmapItem.keyPressEvent')
 def test_key_press_event_escape(key_mock, qapp, item):
     item.exit_crop_mode = MagicMock()
     event = MagicMock()
@@ -382,7 +382,7 @@ def test_key_press_event_escape(key_mock, qapp, item):
     key_mock.assert_not_called()
 
 
-@patch('PyQt6.QtWidgets.QGraphicsPixmapItem.keyPressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsPixmapItem.keyPressEvent')
 def test_key_press_event_other(key_mock, qapp, item):
     item.exit_crop_mode = MagicMock()
     event = MagicMock()

@@ -1,7 +1,7 @@
 from unittest.mock import patch, MagicMock
 
-from PyQt6 import QtCore, QtWidgets
-from PyQt6.QtCore import Qt
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtCore import Qt
 
 from beeref.items import BeeTextItem, item_registry
 
@@ -73,7 +73,7 @@ def test_contains_when_outside_bounds(brect_mock, qapp):
     brect_mock.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QGraphicsTextItem.paint')
+@patch('PyQt5.QtWidgets.QGraphicsTextItem.paint')
 def test_paint(paint_mock, qapp):
     item = BeeTextItem('foo bar')
     item.paint_selectable = MagicMock()
@@ -210,7 +210,7 @@ def test_enter_edit_mode(view):
     assert flags == Qt.TextInteractionFlag.TextEditorInteraction
 
 
-@patch('PyQt6.QtGui.QTextCursor')
+@patch('PyQt5.QtGui.QTextCursor')
 @patch('beeref.items.BeeTextItem.setTextCursor')
 def test_exit_edit_mode(setcursor_mock, cursor_mock, view):
     item = BeeTextItem('foo bar')
@@ -226,7 +226,7 @@ def test_exit_edit_mode(setcursor_mock, cursor_mock, view):
     setcursor_mock.assert_called_once_with(cursor_mock.return_value)
 
 
-@patch('PyQt6.QtWidgets.QGraphicsTextItem.keyPressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsTextItem.keyPressEvent')
 @patch('beeref.items.BeeTextItem.exit_edit_mode')
 def test_key_press_event_any_key(exit_mock, key_press_mock, view):
     item = BeeTextItem('foo bar')
@@ -241,7 +241,7 @@ def test_key_press_event_any_key(exit_mock, key_press_mock, view):
     assert view.scene.edit_item == item
 
 
-@patch('PyQt6.QtWidgets.QGraphicsTextItem.keyPressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsTextItem.keyPressEvent')
 @patch('beeref.items.BeeTextItem.exit_edit_mode')
 def test_key_press_event_shift_return(exit_mock, key_press_mock, view):
     item = BeeTextItem('foo bar')
@@ -256,7 +256,7 @@ def test_key_press_event_shift_return(exit_mock, key_press_mock, view):
     assert view.scene.edit_item == item
 
 
-@patch('PyQt6.QtWidgets.QGraphicsTextItem.keyPressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsTextItem.keyPressEvent')
 @patch('beeref.items.BeeTextItem.exit_edit_mode')
 def test_key_press_event_shift_enter(exit_mock, key_press_mock, view):
     item = BeeTextItem('foo bar')
@@ -271,7 +271,7 @@ def test_key_press_event_shift_enter(exit_mock, key_press_mock, view):
     assert view.scene.edit_item == item
 
 
-@patch('PyQt6.QtWidgets.QGraphicsTextItem.keyPressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsTextItem.keyPressEvent')
 @patch('beeref.items.BeeTextItem.exit_edit_mode')
 def test_key_press_event_return(exit_mock, key_press_mock, view):
     item = BeeTextItem('foo bar')
@@ -286,7 +286,7 @@ def test_key_press_event_return(exit_mock, key_press_mock, view):
     assert view.scene.edit_item is None
 
 
-@patch('PyQt6.QtWidgets.QGraphicsTextItem.keyPressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsTextItem.keyPressEvent')
 @patch('beeref.items.BeeTextItem.exit_edit_mode')
 def test_key_press_event_enter(exit_mock, key_press_mock, view):
     item = BeeTextItem('foo bar')

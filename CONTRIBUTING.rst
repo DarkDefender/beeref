@@ -1,7 +1,7 @@
 BeeRef — Notes For Developers
 =============================
 
-BeeRef is written in Python and PyQt6.
+BeeRef is written in Python and PyQt5.
 
 
 Developing

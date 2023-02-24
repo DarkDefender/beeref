@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock, patch
 
-from PyQt6 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
 
 from beeref import commands
 from beeref.items import BeePixmapItem, BeeTextItem

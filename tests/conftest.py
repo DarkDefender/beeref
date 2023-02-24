@@ -4,7 +4,7 @@ import uuid
 
 from unittest.mock import MagicMock, patch
 
-from PyQt6 import QtGui, QtWidgets
+from PyQt5 import QtGui, QtWidgets
 
 
 def pytest_configure(config):

@@ -16,8 +16,8 @@
 import logging
 import os.path
 
-from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtCore import Qt
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
 
 from beeref import constants
 from beeref.config import logfile_name, BeeSettings
@@ -74,8 +74,8 @@ class RecentFilesView(QtWidgets.QListView):
 
     def mouseMoveEvent(self, event):
         index = self.indexAt(
-            QtCore.QPoint(int(event.position().x()),
-                          int(event.position().y())))
+            QtCore.QPoint(int(event.pos().x()),
+                          int(event.pos().y())))
         if index.isValid():
             self.setCursor(Qt.CursorShape.PointingHandCursor)
         else:

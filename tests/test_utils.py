@@ -1,6 +1,6 @@
 import pytest
 
-from PyQt6 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
 
 from beeref import utils
 

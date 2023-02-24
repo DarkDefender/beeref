@@ -15,8 +15,8 @@
 
 import logging
 
-from PyQt6 import QtCore, QtGui
-from PyQt6.QtCore import Qt
+from PyQt5 import QtCore, QtGui
+from PyQt5.QtCore import Qt
 
 from beeref import commands
 from beeref.items import BeePixmapItem
@@ -56,8 +56,8 @@ class MainControlsMixin:
     def dropEvent(self, event):
         mimedata = event.mimeData()
         logger.debug(f'Handling file drop: {mimedata.formats()}')
-        pos = QtCore.QPoint(round(event.position().x()),
-                            round(event.position().y()))
+        pos = QtCore.QPoint(round(event.pos().x()),
+                            round(event.pos().y()))
         if mimedata.hasUrls():
             logger.debug(f'Found dropped urls: {mimedata.urls()}')
             if not self.control_target.scene.items():

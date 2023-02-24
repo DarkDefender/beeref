@@ -1,4 +1,4 @@
-from PyQt6 import QtGui
+from PyQt5 import QtGui
 
 from beeref.assets import BeeAssets
 

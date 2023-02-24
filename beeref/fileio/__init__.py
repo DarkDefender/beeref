@@ -15,7 +15,7 @@
 
 import logging
 
-from PyQt6 import QtCore
+from PyQt5 import QtCore
 
 from beeref import commands
 from beeref.fileio.errors import BeeFileIOError

@@ -4,7 +4,7 @@ import os.path
 import stat
 from unittest.mock import MagicMock, patch
 
-from PyQt6 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
 import pytest
 
 from beeref.fileio import schema, is_bee_file

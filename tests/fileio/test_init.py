@@ -2,7 +2,7 @@ import os.path
 import tempfile
 from unittest.mock import MagicMock, patch
 
-from PyQt6 import QtCore
+from PyQt5 import QtCore
 
 from beeref import fileio
 from beeref import commands

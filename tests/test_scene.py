@@ -3,8 +3,8 @@ from unittest.mock import patch, MagicMock
 
 from pytest import approx
 
-from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtCore import Qt
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
 
 from beeref import commands
 from beeref.items import BeePixmapItem, BeeTextItem
@@ -548,7 +548,7 @@ def test_has_croppable_selection_when_multi_selection(view, item):
     assert view.scene.has_croppable_selection() is False
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mousePressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mousePressEvent')
 def test_mouse_press_event_when_right_click(mouse_mock, view):
     event = MagicMock(
         button=MagicMock(return_value=Qt.MouseButton.RightButton))
@@ -557,7 +557,7 @@ def test_mouse_press_event_when_right_click(mouse_mock, view):
     mouse_mock.assert_not_called()
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mousePressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mousePressEvent')
 def test_mouse_press_event_when_left_click_over_item(mouse_mock, view, item):
     view.scene.itemAt = MagicMock(return_value=item)
     event = MagicMock(
@@ -572,7 +572,7 @@ def test_mouse_press_event_when_left_click_over_item(mouse_mock, view, item):
     assert view.scene.event_start == QtCore.QPointF(10, 20)
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mousePressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mousePressEvent')
 def test_mouse_press_event_when_left_click_over_item_in_edit_mode(
         mouse_mock, view):
     item = BeeTextItem('foo bar')
@@ -591,7 +591,7 @@ def test_mouse_press_event_when_left_click_over_item_in_edit_mode(
     assert view.scene.rubberband_active is False
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mousePressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mousePressEvent')
 def test_mouse_press_event_when_left_click_over_diff_item_in_edit_mode(
         mouse_mock, view, item):
     txtitem = BeeTextItem('foo bar')
@@ -610,7 +610,7 @@ def test_mouse_press_event_when_left_click_over_diff_item_in_edit_mode(
     assert view.scene.rubberband_active is False
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mousePressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mousePressEvent')
 def test_mouse_press_event_when_left_click_over_no_item_in_edit_mode(
         mouse_mock, view):
     item = BeeTextItem('foo bar')
@@ -629,7 +629,7 @@ def test_mouse_press_event_when_left_click_over_no_item_in_edit_mode(
     assert view.scene.rubberband_active is True
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mousePressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mousePressEvent')
 def test_mouse_press_event_when_left_click_over_item_in_crop_mode(
         mouse_mock, view, item):
     view.scene.addItem(item)
@@ -647,7 +647,7 @@ def test_mouse_press_event_when_left_click_over_item_in_crop_mode(
     assert view.scene.rubberband_active is False
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mousePressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mousePressEvent')
 def test_mouse_press_event_when_left_click_over_diff_item_in_crop_mode(
         mouse_mock, view, item):
     view.scene.addItem(item)
@@ -666,7 +666,7 @@ def test_mouse_press_event_when_left_click_over_diff_item_in_crop_mode(
     assert view.scene.rubberband_active is False
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mousePressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mousePressEvent')
 def test_mouse_press_event_when_left_click_over_no_item_in_crop_mode(
         mouse_mock, view, item):
     view.scene.addItem(item)
@@ -684,7 +684,7 @@ def test_mouse_press_event_when_left_click_over_no_item_in_crop_mode(
     assert view.scene.rubberband_active is True
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mousePressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mousePressEvent')
 def test_mouse_press_event_when_left_click_not_over_item(
         mouse_mock, view, item):
     view.scene.addItem(item)
@@ -701,7 +701,7 @@ def test_mouse_press_event_when_left_click_not_over_item(
     assert view.scene.event_start == QtCore.QPointF(10, 20)
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mousePressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mousePressEvent')
 def test_mouse_press_event_when_no_items(mouse_mock, view):
     view.scene.itemAt = MagicMock(return_value=None)
     event = MagicMock(
@@ -716,7 +716,7 @@ def test_mouse_press_event_when_no_items(mouse_mock, view):
     mouse_mock.assert_called_once_with(event)
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mouseDoubleClickEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mouseDoubleClickEvent')
 def test_mouse_doubleclick_event_when_over_item(mouse_mock, view, item):
     event = MagicMock()
     view.scene.move_active = True
@@ -736,8 +736,8 @@ def test_mouse_doubleclick_event_when_over_item(mouse_mock, view, item):
     mouse_mock.assert_not_called()
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mousePressEvent')
-@patch('PyQt6.QtWidgets.QGraphicsScene.mouseDoubleClickEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mousePressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mouseDoubleClickEvent')
 def test_mouse_doubleclick_event_when_over_editable_item(
         double_mock, press_mock, view):
     item = BeeTextItem('foo bar')
@@ -760,7 +760,7 @@ def test_mouse_doubleclick_event_when_over_editable_item(
     press_mock.assert_called_once_with(event)
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mouseDoubleClickEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mouseDoubleClickEvent')
 def test_mouse_doubleclick_event_when_item_not_selected(
         mouse_mock, view, item):
     event = MagicMock()
@@ -782,7 +782,7 @@ def test_mouse_doubleclick_event_when_item_not_selected(
     assert item.isSelected() is True
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mouseDoubleClickEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mouseDoubleClickEvent')
 def test_mouse_doubleclick_event_when_not_over_item(mouse_mock, view):
     event = MagicMock()
     view.fit_rect = MagicMock()
@@ -792,7 +792,7 @@ def test_mouse_doubleclick_event_when_not_over_item(mouse_mock, view):
     mouse_mock.assert_called_once_with(event)
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mouseMoveEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mouseMoveEvent')
 def test_mouse_move_event_when_rubberband_new(
         mouse_mock, view, imgfilename3x3):
     item = BeePixmapItem(QtGui.QImage(imgfilename3x3))
@@ -816,7 +816,7 @@ def test_mouse_move_event_when_rubberband_new(
     assert mouse_mock.called_once_with(event)
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mouseMoveEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mouseMoveEvent')
 def test_mouse_move_event_when_rubberband_not_new(
         mouse_mock, view, imgfilename3x3):
     item = BeePixmapItem(QtGui.QImage(imgfilename3x3))
@@ -840,7 +840,7 @@ def test_mouse_move_event_when_rubberband_not_new(
     assert mouse_mock.called_once_with(event)
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mouseMoveEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mouseMoveEvent')
 def test_mouse_move_event_when_no_rubberband(mouse_mock, view, imgfilename3x3):
     item = BeePixmapItem(QtGui.QImage(imgfilename3x3))
     view.scene.addItem(item)
@@ -862,7 +862,7 @@ def test_mouse_move_event_when_no_rubberband(mouse_mock, view, imgfilename3x3):
     assert mouse_mock.called_once_with(event)
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mouseReleaseEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mouseReleaseEvent')
 def test_mouse_release_event_when_rubberband_active(mouse_mock, view):
     event = MagicMock()
     view.scene.rubberband_active = True
@@ -874,7 +874,7 @@ def test_mouse_release_event_when_rubberband_active(mouse_mock, view):
     view.scene.rubberband_active is False
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mouseReleaseEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mouseReleaseEvent')
 def test_mouse_release_event_when_move_active(mouse_mock, view, item):
     view.scene.addItem(item)
     item.setSelected(True)
@@ -896,7 +896,7 @@ def test_mouse_release_event_when_move_active(mouse_mock, view, item):
     assert view.scene.move_active is False
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mouseReleaseEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mouseReleaseEvent')
 def test_mouse_release_event_when_move_not_active(mouse_mock, view, item):
     view.scene.addItem(item)
     item.setSelected(True)
@@ -910,7 +910,7 @@ def test_mouse_release_event_when_move_not_active(mouse_mock, view, item):
     assert view.scene.move_active is False
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mouseReleaseEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mouseReleaseEvent')
 def test_mouse_release_event_when_no_selection(mouse_mock, view, item):
     view.scene.addItem(item)
     item.setSelected(False)
@@ -924,7 +924,7 @@ def test_mouse_release_event_when_no_selection(mouse_mock, view, item):
     assert view.scene.move_active is False
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mouseReleaseEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mouseReleaseEvent')
 def test_mouse_release_event_when_item_action_active(mouse_mock, view, item):
     view.scene.addItem(item)
     item.setSelected(True)
@@ -939,7 +939,7 @@ def test_mouse_release_event_when_item_action_active(mouse_mock, view, item):
     assert view.scene.move_active is False
 
 
-@patch('PyQt6.QtWidgets.QGraphicsScene.mouseReleaseEvent')
+@patch('PyQt5.QtWidgets.QGraphicsScene.mouseReleaseEvent')
 def test_mouse_release_event_when_multiselect_action_active(mouse_mock, view):
     item1 = BeePixmapItem(QtGui.QImage())
     view.scene.addItem(item1)

@@ -18,9 +18,9 @@
 import logging
 import math
 
-from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QGraphicsItem
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QGraphicsItem
 
 from beeref.assets import BeeAssets
 from beeref import commands

@@ -17,8 +17,8 @@ from queue import Queue
 import logging
 import math
 
-from PyQt6 import QtCore, QtWidgets
-from PyQt6.QtCore import Qt
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtCore import Qt
 
 import rpack
 

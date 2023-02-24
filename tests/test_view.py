@@ -3,8 +3,8 @@ import shutil
 import sqlite3
 from unittest.mock import MagicMock, patch, mock_open
 
-from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtCore import Qt
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
 
 from beeref.config import logfile_name
 from beeref.items import BeePixmapItem, BeeTextItem
@@ -174,7 +174,7 @@ def test_open_from_file_when_error(view, qtbot):
         'uieauiae', ['unable to open database file'])
 
 
-@patch('PyQt6.QtWidgets.QFileDialog.getOpenFileName')
+@patch('PyQt5.QtWidgets.QFileDialog.getOpenFileName')
 def test_on_action_open(dialog_mock, view, qtbot):
     # FIXME: #1
     # Can't check signal handling currently
@@ -194,7 +194,7 @@ def test_on_action_open(dialog_mock, view, qtbot):
     view.scene.cancel_crop_mode.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QFileDialog.getOpenFileName')
+@patch('PyQt5.QtWidgets.QFileDialog.getOpenFileName')
 @patch('beeref.view.BeeGraphicsView.open_from_file')
 def test_on_action_open_when_no_filename(open_mock, dialog_mock, view):
     dialog_mock.return_value = (None, None)
@@ -204,7 +204,7 @@ def test_on_action_open_when_no_filename(open_mock, dialog_mock, view):
     view.scene.cancel_crop_mode.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QFileDialog.getSaveFileName')
+@patch('PyQt5.QtWidgets.QFileDialog.getSaveFileName')
 def test_on_action_save_as(dialog_mock, view, imgfilename3x3, tmpdir):
     item = BeePixmapItem(QtGui.QImage(imgfilename3x3))
     view.scene.addItem(item)
@@ -218,7 +218,7 @@ def test_on_action_save_as(dialog_mock, view, imgfilename3x3, tmpdir):
     view.scene.cancel_crop_mode.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QFileDialog.getSaveFileName')
+@patch('PyQt5.QtWidgets.QFileDialog.getSaveFileName')
 @patch('beeref.view.BeeGraphicsView.do_save')
 def test_on_action_save_as_when_no_filename(
         save_mock, dialog_mock, view, imgfilename3x3):
@@ -231,7 +231,7 @@ def test_on_action_save_as_when_no_filename(
     view.scene.cancel_crop_mode.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QFileDialog.getSaveFileName')
+@patch('PyQt5.QtWidgets.QFileDialog.getSaveFileName')
 def test_on_action_save_as_filename_doesnt_end_with_bee(
         dialog_mock, view, qtbot, imgfilename3x3, tmpdir):
     item = BeePixmapItem(QtGui.QImage(imgfilename3x3))
@@ -248,7 +248,7 @@ def test_on_action_save_as_filename_doesnt_end_with_bee(
     view.scene.cancel_crop_mode.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QFileDialog.getSaveFileName')
+@patch('PyQt5.QtWidgets.QFileDialog.getSaveFileName')
 @patch('beeref.fileio.sql.SQLiteIO.write_data')
 def test_on_action_save_as_when_error(
         save_mock, dialog_mock, view, qtbot, imgfilename3x3, tmpdir):
@@ -307,7 +307,7 @@ def test_on_action_debuglog(show_mock, view):
 
 
 @patch('beeref.scene.BeeGraphicsScene.clearSelection')
-@patch('PyQt6.QtWidgets.QFileDialog.getOpenFileNames')
+@patch('PyQt5.QtWidgets.QFileDialog.getOpenFileNames')
 def test_on_action_insert_images_new_scene(
         dialog_mock, clear_mock, view, imgfilename3x3, qtbot):
     dialog_mock.return_value = ([imgfilename3x3], None)
@@ -325,7 +325,7 @@ def test_on_action_insert_images_new_scene(
 
 
 @patch('beeref.scene.BeeGraphicsScene.clearSelection')
-@patch('PyQt6.QtWidgets.QFileDialog.getOpenFileNames')
+@patch('PyQt5.QtWidgets.QFileDialog.getOpenFileNames')
 def test_on_action_insert_images_existing_scene(
         dialog_mock, clear_mock, view, imgfilename3x3, qtbot, item):
     view.scene.addItem(item)
@@ -344,7 +344,7 @@ def test_on_action_insert_images_existing_scene(
 
 
 @patch('beeref.scene.BeeGraphicsScene.clearSelection')
-@patch('PyQt6.QtWidgets.QFileDialog.getOpenFileNames')
+@patch('PyQt5.QtWidgets.QFileDialog.getOpenFileNames')
 def test_on_action_insert_images_when_error(
         dialog_mock, clear_mock, view, imgfilename3x3, qtbot):
     dialog_mock.return_value = ([imgfilename3x3, 'iaeiae', 'trntrn'], None)
@@ -374,7 +374,7 @@ def test_on_action_insert_text(clear_mock, view):
     view.scene.cancel_crop_mode.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QApplication.clipboard')
+@patch('PyQt5.QtWidgets.QApplication.clipboard')
 def test_on_action_copy_image(clipboard_mock, view, imgfilename3x3):
     item = BeePixmapItem(QtGui.QImage(imgfilename3x3))
     view.scene.addItem(item)
@@ -390,7 +390,7 @@ def test_on_action_copy_image(clipboard_mock, view, imgfilename3x3):
     view.scene.cancel_crop_mode.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QApplication.clipboard')
+@patch('PyQt5.QtWidgets.QApplication.clipboard')
 def test_on_action_copy_text(clipboard_mock, view, imgfilename3x3):
     item = BeeTextItem('foo bar')
     view.scene.addItem(item)
@@ -408,7 +408,7 @@ def test_on_action_copy_text(clipboard_mock, view, imgfilename3x3):
 
 @patch('beeref.view.BeeGraphicsView.on_action_fit_scene')
 @patch('beeref.scene.BeeGraphicsScene.clearSelection')
-@patch('PyQt6.QtGui.QClipboard.image')
+@patch('PyQt5.QtGui.QClipboard.image')
 def test_on_action_paste_external_new_scene(
         clipboard_mock, clear_mock, fit_mock, view, imgfilename3x3):
     clipboard_mock.return_value = QtGui.QImage(imgfilename3x3)
@@ -422,7 +422,7 @@ def test_on_action_paste_external_new_scene(
 
 @patch('beeref.view.BeeGraphicsView.on_action_fit_scene')
 @patch('beeref.scene.BeeGraphicsScene.clearSelection')
-@patch('PyQt6.QtGui.QClipboard.image')
+@patch('PyQt5.QtGui.QClipboard.image')
 def test_on_action_paste_external_existing_scene(
         clipboard_mock, clear_mock, fit_mock, view, item, imgfilename3x3):
     view.scene.addItem(item)
@@ -437,7 +437,7 @@ def test_on_action_paste_external_existing_scene(
 
 
 @patch('beeref.scene.BeeGraphicsScene.clearSelection')
-@patch('PyQt6.QtGui.QClipboard.mimeData')
+@patch('PyQt5.QtGui.QClipboard.mimeData')
 def test_on_action_paste_internal(mimedata_mock, clear_mock, view):
     mimedata = QtCore.QMimeData()
     mimedata.setData('beeref/items', QtCore.QByteArray.number(1))
@@ -453,8 +453,8 @@ def test_on_action_paste_internal(mimedata_mock, clear_mock, view):
 
 
 @patch('beeref.scene.BeeGraphicsScene.clearSelection')
-@patch('PyQt6.QtGui.QClipboard.text')
-@patch('PyQt6.QtGui.QClipboard.image')
+@patch('PyQt5.QtGui.QClipboard.text')
+@patch('PyQt5.QtGui.QClipboard.image')
 def test_on_action_paste_when_text(img_mock, text_mock, clear_mock, view):
     img_mock.return_value = QtGui.QImage()
     text_mock.return_value = 'foo bar'
@@ -468,8 +468,8 @@ def test_on_action_paste_when_text(img_mock, text_mock, clear_mock, view):
 
 
 @patch('beeref.scene.BeeGraphicsScene.clearSelection')
-@patch('PyQt6.QtGui.QClipboard.text')
-@patch('PyQt6.QtGui.QClipboard.image')
+@patch('PyQt5.QtGui.QClipboard.text')
+@patch('PyQt5.QtGui.QClipboard.image')
 def test_on_action_paste_when_empty(img_mock, text_mock, clear_mock, view):
     view.scene.cancel_crop_mode = MagicMock()
     img_mock.return_value = QtGui.QImage()
@@ -490,9 +490,9 @@ def test_on_action_cut(copy_mock, view, item):
     assert view.undo_stack.isClean() is False
 
 
-@patch('PyQt6.QtWidgets.QWidget.create')
-@patch('PyQt6.QtWidgets.QWidget.destroy')
-@patch('PyQt6.QtWidgets.QWidget.show')
+@patch('PyQt5.QtWidgets.QWidget.create')
+@patch('PyQt5.QtWidgets.QWidget.destroy')
+@patch('PyQt5.QtWidgets.QWidget.show')
 def test_on_action_always_on_top_checked(
         show_mock, destroy_mock, create_mock, view):
     view.on_action_always_on_top(True)
@@ -502,9 +502,9 @@ def test_on_action_always_on_top_checked(
     create_mock.assert_called_once()
 
 
-@patch('PyQt6.QtWidgets.QWidget.create')
-@patch('PyQt6.QtWidgets.QWidget.destroy')
-@patch('PyQt6.QtWidgets.QWidget.show')
+@patch('PyQt5.QtWidgets.QWidget.create')
+@patch('PyQt5.QtWidgets.QWidget.destroy')
+@patch('PyQt5.QtWidgets.QWidget.show')
 def test_on_action_always_on_top_unchecked(
         show_mock, destroy_mock, create_mock, view):
     view.on_action_always_on_top(False)
@@ -522,9 +522,9 @@ def test_on_action_show_menubar(view):
     assert view.parent.menuBar().actions() == []
 
 
-@patch('PyQt6.QtWidgets.QWidget.create')
-@patch('PyQt6.QtWidgets.QWidget.destroy')
-@patch('PyQt6.QtWidgets.QWidget.show')
+@patch('PyQt5.QtWidgets.QWidget.create')
+@patch('PyQt5.QtWidgets.QWidget.destroy')
+@patch('PyQt5.QtWidgets.QWidget.show')
 def test_on_action_show_titlebar_checked(
         show_mock, destroy_mock, create_mock, view):
     view.on_action_show_titlebar(True)
@@ -534,9 +534,9 @@ def test_on_action_show_titlebar_checked(
     create_mock.assert_called_once()
 
 
-@patch('PyQt6.QtWidgets.QWidget.create')
-@patch('PyQt6.QtWidgets.QWidget.destroy')
-@patch('PyQt6.QtWidgets.QWidget.show')
+@patch('PyQt5.QtWidgets.QWidget.create')
+@patch('PyQt5.QtWidgets.QWidget.destroy')
+@patch('PyQt5.QtWidgets.QWidget.show')
 def test_on_action_show_titlebar_unchecked(
         show_mock, destroy_mock, create_mock, view):
     view.on_action_show_titlebar(False)
@@ -556,28 +556,28 @@ def test_on_action_delete_items(view, item):
     view.scene.cancel_crop_mode.assert_called_once()
 
 
-@patch('PyQt6.QtGui.QUndoStack.isClean', return_value=True)
+@patch('PyQt5.QtWidgets.QUndoStack.isClean', return_value=True)
 def test_update_window_title_no_changes_no_filename(clear_mock, view):
     view.filename = None
     view.update_window_title()
     assert view.parent.windowTitle() == 'BeeRef'
 
 
-@patch('PyQt6.QtGui.QUndoStack.isClean', return_value=False)
+@patch('PyQt5.QtWidgets.QUndoStack.isClean', return_value=False)
 def test_update_window_title_changes_no_filename(clear_mock, view):
     view.filename = None
     view.update_window_title()
     assert view.parent.windowTitle() == '[Untitled]* - BeeRef'
 
 
-@patch('PyQt6.QtGui.QUndoStack.isClean', return_value=True)
+@patch('PyQt5.QtWidgets.QUndoStack.isClean', return_value=True)
 def test_update_window_title_no_changes_filename(clear_mock, view):
     view.filename = 'test.bee'
     view.update_window_title()
     assert view.parent.windowTitle() == 'test.bee - BeeRef'
 
 
-@patch('PyQt6.QtGui.QUndoStack.isClean', return_value=False)
+@patch('PyQt5.QtWidgets.QUndoStack.isClean', return_value=False)
 def test_update_window_title_changes_filename(clear_mock, view):
     view.filename = 'test.bee'
     view.update_window_title()
@@ -593,14 +593,14 @@ def test_scale(view_scale_mock, recalc_mock, view):
     assert view.get_scale() == 3.3
 
 
-@patch('PyQt6.QtWidgets.QScrollBar.setValue')
+@patch('PyQt5.QtWidgets.QScrollBar.setValue')
 def test_pan(scroll_value_mock, view, item):
     view.scene.addItem(item)
     view.pan(QtCore.QPointF(5, 10))
     assert scroll_value_mock.call_count == 2
 
 
-@patch('PyQt6.QtWidgets.QScrollBar.setValue')
+@patch('PyQt5.QtWidgets.QScrollBar.setValue')
 def test_pan_when_no_items(scroll_value_mock, view):
     view.pan(QtCore.QPointF(5, 10))
     scroll_value_mock.assert_not_called()
@@ -674,16 +674,16 @@ def test_delta_zero(pan_mock, reset_mock, view, item):
 def test_wheel_event(zoom_mock, view):
     event = MagicMock()
     event.angleDelta.return_value = QtCore.QPointF(0, 40)
-    event.position.return_value = QtCore.QPointF(10, 20)
+    event.pos.return_value = QtCore.QPointF(10, 20)
     view.wheelEvent(event)
     zoom_mock.assert_called_once_with(40, QtCore.QPointF(10, 20))
     event.accept.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QGraphicsView.mousePressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsView.mousePressEvent')
 def test_mouse_press_zoom(mouse_event_mock, view):
     event = MagicMock()
-    event.position.return_value = QtCore.QPointF(10, 20)
+    event.pos.return_value = QtCore.QPointF(10, 20)
     event.button.return_value = Qt.MouseButton.MiddleButton
     event.modifiers.return_value = Qt.KeyboardModifier.ControlModifier
     view.mousePressEvent(event)
@@ -696,10 +696,10 @@ def test_mouse_press_zoom(mouse_event_mock, view):
     event.accept.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QGraphicsView.mousePressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsView.mousePressEvent')
 def test_mouse_press_pan_middle_drag(mouse_event_mock, view):
     event = MagicMock()
-    event.position.return_value = QtCore.QPointF(10, 20)
+    event.pos.return_value = QtCore.QPointF(10, 20)
     event.button.return_value = Qt.MouseButton.MiddleButton
     event.modifiers.return_value = None
     view.mousePressEvent(event)
@@ -712,10 +712,10 @@ def test_mouse_press_pan_middle_drag(mouse_event_mock, view):
     event.accept.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QGraphicsView.mousePressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsView.mousePressEvent')
 def test_mouse_press_pan_alt_left_drag(mouse_event_mock, view):
     event = MagicMock()
-    event.position.return_value = QtCore.QPointF(10, 20)
+    event.pos.return_value = QtCore.QPointF(10, 20)
     event.button.return_value = Qt.MouseButton.LeftButton
     event.modifiers.return_value = Qt.KeyboardModifier.AltModifier
     view.mousePressEvent(event)
@@ -728,10 +728,10 @@ def test_mouse_press_pan_alt_left_drag(mouse_event_mock, view):
     event.accept.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QGraphicsView.mousePressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsView.mousePressEvent')
 def test_mouse_press_move_window(mouse_event_mock, view):
     event = MagicMock()
-    event.position.return_value = QtCore.QPointF(10, 20)
+    event.pos.return_value = QtCore.QPoint(10, 20)
     event.button.return_value = Qt.MouseButton.LeftButton
     event.modifiers.return_value = (
         Qt.KeyboardModifier.AltModifier | Qt.KeyboardModifier.ControlModifier)
@@ -739,12 +739,12 @@ def test_mouse_press_move_window(mouse_event_mock, view):
     assert view.pan_active is False
     assert view.zoom_active is False
     assert view.movewin_active is True
-    assert view.event_start == view.mapToGlobal(QtCore.QPointF(10, 20))
+    assert view.event_start == view.mapToGlobal(QtCore.QPoint(10, 20))
     mouse_event_mock.assert_not_called()
     event.accept.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QGraphicsView.mousePressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsView.mousePressEvent')
 def test_mouse_press_unhandled(mouse_event_mock, view):
     event = MagicMock()
     event.button.return_value = Qt.MouseButton.LeftButton
@@ -757,56 +757,56 @@ def test_mouse_press_unhandled(mouse_event_mock, view):
     event.accept.assert_not_called()
 
 
-@patch('PyQt6.QtWidgets.QGraphicsView.mouseMoveEvent')
+@patch('PyQt5.QtWidgets.QGraphicsView.mouseMoveEvent')
 @patch('beeref.view.BeeGraphicsView.pan')
 def test_mouse_move_pan(pan_mock, mouse_event_mock, view):
     view.pan_active = True
     view.event_start = QtCore.QPointF(55, 66)
     event = MagicMock()
-    event.position.return_value = QtCore.QPointF(10, 20)
+    event.pos.return_value = QtCore.QPointF(10, 20)
     view.mouseMoveEvent(event)
     pan_mock.assert_called_once_with(QtCore.QPointF(45, 46))
     mouse_event_mock.assert_not_called()
     event.accept.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QGraphicsView.mouseMoveEvent')
+@patch('PyQt5.QtWidgets.QGraphicsView.mouseMoveEvent')
 @patch('beeref.view.BeeGraphicsView.zoom')
 def test_mouse_move_zoom(zoom_mock, mouse_event_mock, view):
     view.zoom_active = True
     view.event_anchor = QtCore.QPointF(55, 66)
     view.event_start = QtCore.QPointF(10, 20)
     event = MagicMock()
-    event.position.return_value = QtCore.QPointF(10, 18)
+    event.pos.return_value = QtCore.QPointF(10, 18)
     view.mouseMoveEvent(event)
     zoom_mock.assert_called_once_with(40, QtCore.QPointF(55, 66))
     mouse_event_mock.assert_not_called()
     event.accept.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QGraphicsView.mouseMoveEvent')
-@patch('PyQt6.QtWidgets.QWidget.move')
+@patch('PyQt5.QtWidgets.QGraphicsView.mouseMoveEvent')
+@patch('PyQt5.QtWidgets.QWidget.move')
 def test_mouse_move_movewin(move_mock, mouse_event_mock, view):
     view.movewin_active = True
-    view.event_start = QtCore.QPointF(10, 20)
+    view.event_start = QtCore.QPoint(10, 20)
     event = MagicMock()
-    event.position.return_value = QtCore.QPointF(15, 18)
+    event.pos.return_value = QtCore.QPoint(15, 18)
     view.mouseMoveEvent(event)
     move_mock.assert_called_once_with(5, -2)
     mouse_event_mock.assert_not_called()
     event.accept.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QGraphicsView.mouseMoveEvent')
+@patch('PyQt5.QtWidgets.QGraphicsView.mouseMoveEvent')
 def test_mouse_move_unhandled(mouse_event_mock, view):
     event = MagicMock()
-    event.position.return_value = QtCore.QPointF(10, 20)
+    event.pos.return_value = QtCore.QPointF(10, 20)
     view.mouseMoveEvent(event)
     mouse_event_mock.assert_called_once_with(event)
     event.accept.assert_not_called()
 
 
-@patch('PyQt6.QtWidgets.QGraphicsView.mouseReleaseEvent')
+@patch('PyQt5.QtWidgets.QGraphicsView.mouseReleaseEvent')
 def test_mouse_release_pan(mouse_event_mock, view):
     event = MagicMock()
     view.pan_active = True
@@ -818,7 +818,7 @@ def test_mouse_release_pan(mouse_event_mock, view):
     view.cursor() == Qt.CursorShape.ArrowCursor
 
 
-@patch('PyQt6.QtWidgets.QGraphicsView.mouseReleaseEvent')
+@patch('PyQt5.QtWidgets.QGraphicsView.mouseReleaseEvent')
 def test_mouse_release_zoom(mouse_event_mock, view):
     event = MagicMock()
     view.zoom_active = True
@@ -828,7 +828,7 @@ def test_mouse_release_zoom(mouse_event_mock, view):
     event.accept.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QGraphicsView.mouseReleaseEvent')
+@patch('PyQt5.QtWidgets.QGraphicsView.mouseReleaseEvent')
 def test_mouse_release_movewin(mouse_event_mock, view):
     event = MagicMock()
     view.movewin_active = True
@@ -838,7 +838,7 @@ def test_mouse_release_movewin(mouse_event_mock, view):
     event.accept.assert_called_once_with()
 
 
-@patch('PyQt6.QtWidgets.QGraphicsView.mouseReleaseEvent')
+@patch('PyQt5.QtWidgets.QGraphicsView.mouseReleaseEvent')
 def test_mouse_release_unhandled(mouse_event_mock, view):
     event = MagicMock()
     view.mouseReleaseEvent(event)
@@ -890,7 +890,7 @@ def test_drop_when_url(insert_mock, view, imgfilename3x3):
     mimedata.setUrls([url])
     event = MagicMock()
     event.mimeData.return_value = mimedata
-    event.position.return_value = QtCore.QPointF(10, 20)
+    event.pos.return_value = QtCore.QPointF(10, 20)
 
     view.dropEvent(event)
     insert_mock.assert_called_once_with([url], QtCore.QPoint(10, 20))
@@ -905,7 +905,7 @@ def test_drop_when_url_beefile_and_scene_empty(open_mock, view):
     mimedata.setUrls([url])
     event = MagicMock()
     event.mimeData.return_value = mimedata
-    event.position.return_value = QtCore.QPointF(10, 20)
+    event.pos.return_value = QtCore.QPointF(10, 20)
 
     view.dropEvent(event)
     open_mock.assert_called_once_with(filename)
@@ -923,7 +923,7 @@ def test_drop_when_url_beefile_and_scene_not_empty(
     mimedata.setUrls([url])
     event = MagicMock()
     event.mimeData.return_value = mimedata
-    event.position.return_value = QtCore.QPointF(10, 20)
+    event.pos.return_value = QtCore.QPointF(10, 20)
 
     view.dropEvent(event)
     open_mock.assert_not_called()
@@ -934,7 +934,7 @@ def test_drop_when_img(view, imgfilename3x3):
     mimedata.setImageData(QtGui.QImage(imgfilename3x3))
     event = MagicMock()
     event.mimeData.return_value = mimedata
-    event.position.return_value = QtCore.QPointF(10, 20)
+    event.pos.return_value = QtCore.QPointF(10, 20)
 
     view.dropEvent(event)
     assert len(view.scene.items()) == 1

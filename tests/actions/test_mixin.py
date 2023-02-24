@@ -1,7 +1,7 @@
 import os.path
 from unittest.mock import patch, MagicMock, call
 
-from PyQt6 import QtWidgets
+from PyQt5 import QtWidgets
 
 from beeref.actions import ActionsMixin
 from beeref.actions.menu_structure import MENU_SEPARATOR
@@ -22,8 +22,8 @@ class FooWidget(QtWidgets.QWidget, ActionsMixin):
         pass
 
 
-@patch('PyQt6.QtGui.QAction.triggered')
-@patch('PyQt6.QtGui.QAction.toggled')
+@patch('PyQt5.QtWidgets.QAction.triggered')
+@patch('PyQt5.QtWidgets.QAction.toggled')
 @patch('beeref.actions.mixin.menu_structure')
 @patch('beeref.actions.mixin.actions')
 @patch('beeref.actions.mixin.KeyboardSettings.get_shortcuts')
@@ -71,8 +71,8 @@ def test_create_actions_with_shortcut_from_settings(
     assert qaction.shortcut() == 'Alt+O'
 
 
-@patch('PyQt6.QtGui.QAction.triggered')
-@patch('PyQt6.QtGui.QAction.toggled')
+@patch('PyQt5.QtWidgets.QAction.triggered')
+@patch('PyQt5.QtWidgets.QAction.toggled')
 @patch('beeref.actions.mixin.menu_structure')
 @patch('beeref.actions.mixin.actions')
 def test_create_actions_checkable(
@@ -98,8 +98,8 @@ def test_create_actions_checkable(
     assert widget.bee_actions['foo'] == qaction
 
 
-@patch('PyQt6.QtGui.QAction.triggered')
-@patch('PyQt6.QtGui.QAction.toggled')
+@patch('PyQt5.QtWidgets.QAction.triggered')
+@patch('PyQt5.QtWidgets.QAction.toggled')
 @patch('beeref.actions.mixin.menu_structure')
 @patch('beeref.actions.mixin.actions')
 def test_create_actions_checkable_checked_true(
@@ -128,7 +128,7 @@ def test_create_actions_checkable_checked_true(
 
 @patch.object(FooWidget, 'on_foo')
 @patch.object(FooWidget, 'settings')
-@patch('PyQt6.QtGui.QAction.toggled')
+@patch('PyQt5.QtWidgets.QAction.toggled')
 @patch('beeref.actions.mixin.menu_structure')
 @patch('beeref.actions.mixin.actions')
 def test_create_actions_checkable_with_settings(
@@ -182,7 +182,7 @@ def test_build_menu_and_actions_with_actions(actions_mock, menu_mock, qapp):
         'group': 'bar',
     }]
     menu_mock.__iter__.return_value = ['foo']
-    with patch('PyQt6.QtWidgets.QMenu.addAction') as add_mock:
+    with patch('PyQt5.QtWidgets.QMenu.addAction') as add_mock:
         widget.build_menu_and_actions()
         assert isinstance(widget.context_menu, QtWidgets.QMenu)
         add_mock.assert_called_once_with(widget.bee_actions['foo'])
@@ -193,7 +193,7 @@ def test_build_menu_and_actions_with_actions(actions_mock, menu_mock, qapp):
 def test_build_menu_and_actions_with_separator(actions_mock, menu_mock, qapp):
     widget = FooWidget()
     menu_mock.__iter__.return_value = [MENU_SEPARATOR]
-    with patch('PyQt6.QtWidgets.QMenu.addSeparator') as sep_mock:
+    with patch('PyQt5.QtWidgets.QMenu.addSeparator') as sep_mock:
         widget.build_menu_and_actions()
         assert isinstance(widget.context_menu, QtWidgets.QMenu)
         sep_mock.assert_called_once_with()
@@ -211,8 +211,8 @@ def test_build_menu_and_actions_with_submenu(actions_mock, menu_mock, qapp):
     }]
     menu_mock.__iter__.return_value = [
         {'menu': '&Bar', 'items': ['foo']}]
-    with patch('PyQt6.QtWidgets.QMenu.addAction') as add_mock:
-        with patch('PyQt6.QtWidgets.QMenu.addMenu') as addmenu_mock:
+    with patch('PyQt5.QtWidgets.QMenu.addAction') as add_mock:
+        with patch('PyQt5.QtWidgets.QMenu.addMenu') as addmenu_mock:
             addmenu_mock.return_value = QtWidgets.QMenu()
             widget.build_menu_and_actions()
             assert isinstance(widget.context_menu, QtWidgets.QMenu)
@@ -267,7 +267,7 @@ def test_build_menu_and_actions_disables_actiongroups(
     assert qaction.isEnabled() is False
 
 
-@patch('PyQt6.QtGui.QAction.triggered')
+@patch('PyQt5.QtWidgets.QAction.triggered')
 @patch('beeref.actions.mixin.menu_structure')
 @patch('beeref.actions.mixin.actions')
 @patch('beeref.actions.mixin.KeyboardSettings.get_shortcuts')
@@ -308,7 +308,7 @@ def test_create_recent_files_more_files_than_shortcuts(
         any_order=True)
 
 
-@patch('PyQt6.QtGui.QAction.triggered')
+@patch('PyQt5.QtWidgets.QAction.triggered')
 @patch('beeref.actions.mixin.menu_structure')
 @patch('beeref.actions.mixin.actions')
 @patch('beeref.actions.mixin.KeyboardSettings.get_shortcuts')
@@ -365,7 +365,7 @@ def test_create_recent_files_when_no_files(
         any_order=True)
 
 
-@patch('PyQt6.QtGui.QAction.triggered')
+@patch('PyQt5.QtWidgets.QAction.triggered')
 @patch('beeref.actions.mixin.menu_structure')
 @patch('beeref.actions.mixin.actions')
 def test_update_recent_files(actions_mock, menu_mock, triggered_mock, qapp):

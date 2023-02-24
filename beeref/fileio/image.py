@@ -19,11 +19,9 @@ import tempfile
 from urllib.error import URLError
 from urllib import request
 
-from PyQt6 import QtGui
+from PyQt5 import QtGui
 
-import exif
-import plum
-
+import piexif
 
 logger = logging.getLogger(__name__)
 
@@ -37,39 +35,38 @@ def exif_rotated_image(path=None):
     if img.isNull():
         return img
 
-    with open(path, 'rb') as f:
-        try:
-            exifimg = exif.Image(f)
-        except (plum.exceptions.UnpackError, NotImplementedError):
-            logger.exception(f'Exif parser failed on image: {path}')
-            return img
+    try:
+        exif_dict = piexif.load(path)
+    except:
+        logger.exception(f'Exif parser failed on image: {path}')
+        return img
 
-    if 'orientation' in exifimg.list_all():
-        orientation = exifimg.orientation
+    if piexif.ImageIFD.Orientation in exif_dict['0th']:
+        orientation = exif_dict['0th'][piexif.ImageIFD.Orientation]
     else:
         return img
 
     transform = QtGui.QTransform()
 
-    if orientation == exif.Orientation.TOP_RIGHT:
+    if orientation == 2:
         return img.mirrored(horizontal=True, vertical=False)
-    if orientation == exif.Orientation.BOTTOM_RIGHT:
+    if orientation == 3:
         transform.rotate(180)
         return img.transformed(transform)
-    if orientation == exif.Orientation.BOTTOM_LEFT:
+    if orientation == 4:
         return img.mirrored(horizontal=False, vertical=True)
-    if orientation == exif.Orientation.LEFT_TOP:
+    if orientation == 5:
         transform.rotate(90)
         return img.transformed(transform).mirrored(
             horizontal=True, vertical=False)
-    if orientation == exif.Orientation.RIGHT_TOP:
+    if orientation == 6:
         transform.rotate(90)
         return img.transformed(transform)
-    if orientation == exif.Orientation.RIGHT_BOTTOM:
+    if orientation == 7:
         transform.rotate(270)
         return img.transformed(transform).mirrored(
             horizontal=True, vertical=False)
-    if orientation == exif.Orientation.LEFT_BOTTOM:
+    if orientation == 8:
         transform.rotate(270)
         return img.transformed(transform)
 

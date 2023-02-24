@@ -18,8 +18,8 @@ import logging
 import os
 import os.path
 
-from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtCore import Qt
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
 
 from beeref.actions import ActionsMixin
 from beeref import commands
@@ -51,7 +51,7 @@ class BeeGraphicsView(MainControlsMixin,
             QtGui.QBrush(QtGui.QColor(*constants.COLORS['Scene:Canvas'])))
         self.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
 
-        self.undo_stack = QtGui.QUndoStack(self)
+        self.undo_stack = QtWidgets.QUndoStack(self)
         self.undo_stack.setUndoLimit(100)
         self.undo_stack.canRedoChanged.connect(self.on_can_redo_changed)
         self.undo_stack.canUndoChanged.connect(self.on_can_undo_changed)
@@ -620,15 +620,15 @@ class BeeGraphicsView(MainControlsMixin,
         self.reset_previous_transform()
 
     def wheelEvent(self, event):
-        self.zoom(event.angleDelta().y(), event.position())
+        self.zoom(event.angleDelta().y(), event.pos())
         event.accept()
 
     def mousePressEvent(self, event):
         if (event.button() == Qt.MouseButton.MiddleButton
                 and event.modifiers() == Qt.KeyboardModifier.ControlModifier):
             self.zoom_active = True
-            self.event_start = event.position()
-            self.event_anchor = event.position()
+            self.event_start = event.pos()
+            self.event_anchor = event.pos()
             event.accept()
             return
 
@@ -636,7 +636,7 @@ class BeeGraphicsView(MainControlsMixin,
             or (event.button() == Qt.MouseButton.LeftButton
                 and event.modifiers() == Qt.KeyboardModifier.AltModifier)):
             self.pan_active = True
-            self.event_start = event.position()
+            self.event_start = event.pos()
             self.setCursor(Qt.CursorShape.ClosedHandCursor)
             event.accept()
             return
@@ -645,7 +645,7 @@ class BeeGraphicsView(MainControlsMixin,
                 and event.modifiers() == (Qt.KeyboardModifier.ControlModifier
                                           | Qt.KeyboardModifier.AltModifier)):
             self.movewin_active = True
-            self.event_start = self.mapToGlobal(event.position())
+            self.event_start = self.mapToGlobal(event.pos())
             event.accept()
             return
 
@@ -654,7 +654,7 @@ class BeeGraphicsView(MainControlsMixin,
     def mouseMoveEvent(self, event):
         if self.pan_active:
             self.reset_previous_transform()
-            pos = event.position()
+            pos = event.pos()
             self.pan(self.event_start - pos)
             self.event_start = pos
             event.accept()
@@ -662,7 +662,7 @@ class BeeGraphicsView(MainControlsMixin,
 
         if self.zoom_active:
             self.reset_previous_transform()
-            pos = event.position()
+            pos = event.pos()
             delta = (self.event_start - pos).y()
             self.event_start = pos
             self.zoom(delta * 20, self.event_anchor)
@@ -670,7 +670,7 @@ class BeeGraphicsView(MainControlsMixin,
             return
 
         if self.movewin_active:
-            pos = self.mapToGlobal(event.position())
+            pos = self.mapToGlobal(event.pos())
             delta = pos - self.event_start
             self.event_start = pos
             self.parent.move(self.parent.x() + int(delta.x()),

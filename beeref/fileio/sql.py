@@ -31,7 +31,7 @@ import shutil
 import sqlite3
 import tempfile
 
-from PyQt6 import QtGui
+from PyQt5 import QtGui
 
 from beeref import constants
 from beeref.items import BeePixmapItem

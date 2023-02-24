@@ -1,7 +1,7 @@
 from unittest.mock import patch, MagicMock
 
-from PyQt6 import QtCore, QtGui
-from PyQt6.QtCore import Qt
+from PyQt5 import QtCore, QtGui
+from PyQt5.QtCore import Qt
 
 from beeref.items import BeePixmapItem
 from beeref.selection import MultiSelectItem
@@ -63,7 +63,7 @@ def test_fit_selection_area():
     assert item.isSelected() is True
 
 
-@patch('PyQt6.QtWidgets.QGraphicsRectItem.mousePressEvent')
+@patch('PyQt5.QtWidgets.QGraphicsRectItem.mousePressEvent')
 def test_mouse_press_event_when_ctrl_leftclick(mouse_mock):
     item = MultiSelectItem()
     item.fit_selection_area(QtCore.QRectF(0, 0, 100, 80))

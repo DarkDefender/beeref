@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with BeeRef.  If not, see <https://www.gnu.org/licenses/>.
 
-from PyQt6 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
 
 
 def create_palette_from_dict(conf):

@@ -20,7 +20,7 @@ import logging
 import logging.config
 import os.path
 
-from PyQt6 import QtCore
+from PyQt5 import QtCore
 
 from beeref import constants
 from beeref.bee_logger import qt_message_handler

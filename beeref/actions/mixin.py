@@ -17,7 +17,7 @@ from collections import defaultdict
 from functools import partial
 import os.path
 
-from PyQt6 import QtGui, QtWidgets
+from PyQt5 import QtGui, QtWidgets
 
 from .actions import actions
 from .menu_structure import menu_structure, MENU_SEPARATOR
@@ -72,7 +72,7 @@ class ActionsMixin:
 
     def _create_actions(self):
         for action in actions:
-            qaction = QtGui.QAction(action['text'], self)
+            qaction = QtWidgets.QAction(action['text'], self)
             shortcuts = KeyboardSettings().get_shortcuts(
                 'Actions', action['id'], action.get('shortcuts'))
             if shortcuts:
@@ -114,7 +114,7 @@ class ActionsMixin:
         items = []
         i = -1
         for i, filename in enumerate(files):
-            qaction = QtGui.QAction(os.path.basename(filename), self)
+            qaction = QtWidgets.QAction(os.path.basename(filename), self)
             action_id = f'recent_files_{i}'
             key = 0 if i == 9 else i + 1
             if key < 10:

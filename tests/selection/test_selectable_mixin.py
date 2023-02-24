@@ -2,8 +2,8 @@ import math
 from pytest import approx, mark
 from unittest.mock import patch, MagicMock
 
-from PyQt6 import QtCore, QtGui
-from PyQt6.QtCore import Qt
+from PyQt5 import QtCore, QtGui
+from PyQt5.QtCore import Qt
 
 from beeref.assets import BeeAssets
 from beeref import commands
@@ -783,7 +783,7 @@ def test_mouse_press_event_just_selected(view, item):
     event = MagicMock()
     event.pos.return_value = QtCore.QPointF(0, 0)
     event.button.return_value = Qt.MouseButton.LeftButton
-    with patch('PyQt6.QtWidgets.QGraphicsPixmapItem.mousePressEvent') as m:
+    with patch('PyQt5.QtWidgets.QGraphicsPixmapItem.mousePressEvent') as m:
         with patch.object(item, 'bounding_rect_unselected',
                           return_value=QtCore.QRectF(0, 0, 100, 80)):
             item.mousePressEvent(event)
@@ -797,7 +797,7 @@ def test_mouse_press_event_small_item_inside_handle_free_center(view, item):
     event = MagicMock()
     event.pos.return_value = QtCore.QPointF(10, 10)
     event.button.return_value = Qt.MouseButton.LeftButton
-    with patch('PyQt6.QtWidgets.QGraphicsPixmapItem.mousePressEvent') as m:
+    with patch('PyQt5.QtWidgets.QGraphicsPixmapItem.mousePressEvent') as m:
         with patch.object(item, 'bounding_rect_unselected',
                           return_value=QtCore.QRectF(0, 0, 20, 20)):
             item.mousePressEvent(event)
@@ -851,7 +851,7 @@ def test_mouse_press_event_rotate(view, item):
     event.button.return_value = Qt.MouseButton.LeftButton
     with patch.object(item, 'bounding_rect_unselected',
                       return_value=QtCore.QRectF(0, 0, 100, 80)):
-        with patch('PyQt6.QtWidgets.QGraphicsPixmapItem.mousePressEvent'):
+        with patch('PyQt5.QtWidgets.QGraphicsPixmapItem.mousePressEvent'):
             item.mousePressEvent(event)
             assert item.rotate_active is True
             assert item.event_anchor == QtCore.QPointF(50, 40)
@@ -868,7 +868,7 @@ def test_mouse_press_event_flip(view, item):
     view.scene.undo_stack = MagicMock(push=MagicMock())
     with patch.object(item, 'bounding_rect_unselected',
                       return_value=QtCore.QRectF(0, 0, 100, 80)):
-        with patch('PyQt6.QtWidgets.QGraphicsPixmapItem.mousePressEvent'):
+        with patch('PyQt5.QtWidgets.QGraphicsPixmapItem.mousePressEvent'):
             item.mousePressEvent(event)
     args = view.scene.undo_stack.push.call_args_list[0][0]
     cmd = args[0]
@@ -887,7 +887,7 @@ def test_mouse_press_event_not_in_handles(view, item):
     event = MagicMock()
     event.pos.return_value = QtCore.QPointF(50, 40)
     event.button.return_value = Qt.MouseButton.LeftButton
-    with patch('PyQt6.QtWidgets.QGraphicsPixmapItem.mousePressEvent') as m:
+    with patch('PyQt5.QtWidgets.QGraphicsPixmapItem.mousePressEvent') as m:
         item.mousePressEvent(event)
         m.assert_called_once_with(event)
         assert item.scale_active is False
@@ -902,7 +902,7 @@ def test_mouse_move_event_when_no_action_reset_prev_transform(view, item):
     event = MagicMock()
     item.event_start = QtCore.QPointF(10, 10)
     event.scenePos.return_value = QtCore.QPointF(50, 40)
-    with patch('PyQt6.QtWidgets.QGraphicsPixmapItem.mouseMoveEvent') as m:
+    with patch('PyQt5.QtWidgets.QGraphicsPixmapItem.mouseMoveEvent') as m:
         item.mouseMoveEvent(event)
         m.assert_called_once_with(event)
         view.reset_previous_transform.assert_called_once()
@@ -915,7 +915,7 @@ def test_mouse_move_event_when_no_action_doesnt_reset_prev_transf(view, item):
     event = MagicMock()
     item.event_start = QtCore.QPointF(10, 10)
     event.scenePos.return_value = QtCore.QPointF(11, 11)
-    with patch('PyQt6.QtWidgets.QGraphicsPixmapItem.mouseMoveEvent') as m:
+    with patch('PyQt5.QtWidgets.QGraphicsPixmapItem.mouseMoveEvent') as m:
         item.mouseMoveEvent(event)
         m.assert_called_once_with(event)
         view.reset_previous_transform.assert_not_called()
@@ -932,7 +932,7 @@ def test_mouse_move_event_when_scale_action(view, item):
     item.event_start = QtCore.QPointF(10, 10)
     item.scale_orig_factor = 1
 
-    with patch('PyQt6.QtWidgets.QGraphicsPixmapItem.mouseMoveEvent') as m:
+    with patch('PyQt5.QtWidgets.QGraphicsPixmapItem.mouseMoveEvent') as m:
         with patch.object(item, 'bounding_rect_unselected',
                           return_value=QtCore.QRectF(0, 0, 100, 80)):
             item.mouseMoveEvent(event)
@@ -950,7 +950,7 @@ def test_mouse_move_event_when_rotate_action(view, item):
     item.rotate_orig_degrees = 0
     item.rotate_start_angle = -3
     item.event_anchor = QtCore.QPointF(10, 20)
-    with patch('PyQt6.QtWidgets.QGraphicsPixmapItem.mouseMoveEvent') as m:
+    with patch('PyQt5.QtWidgets.QGraphicsPixmapItem.mouseMoveEvent') as m:
         item.mouseMoveEvent(event)
         m.assert_not_called()
     assert item.rotation() == 318
@@ -963,7 +963,7 @@ def test_mouse_move_event_when_flip_action(view, item):
     event.scenePos.return_value = QtCore.QPointF(15, 25)
     item.event_start = QtCore.QPointF(10, 10)
     item.flip_active = True
-    with patch('PyQt6.QtWidgets.QGraphicsPixmapItem.mouseMoveEvent') as m:
+    with patch('PyQt5.QtWidgets.QGraphicsPixmapItem.mouseMoveEvent') as m:
         item.mouseMoveEvent(event)
         m.assert_not_called()
         event.accept.assert_called_once_with()
@@ -974,7 +974,7 @@ def test_mouse_release_event_when_no_action(view, item):
     event = MagicMock()
     item.flip_active = True
     event.pos.return_value = QtCore.QPointF(-100, -100)
-    with patch('PyQt6.QtWidgets.QGraphicsPixmapItem'
+    with patch('PyQt5.QtWidgets.QGraphicsPixmapItem'
                '.mouseReleaseEvent') as m:
         item.mouseReleaseEvent(event)
         m.assert_called_once_with(event)

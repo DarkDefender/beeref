@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 
-from PyQt6 import QtCore, QtWidgets
-from PyQt6.QtCore import Qt
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtCore import Qt
 
 from beeref.config import logfile_name
 from beeref.widgets import DebugLogDialog, RecentFilesModel

@@ -20,7 +20,7 @@ import platform
 import signal
 import sys
 
-from PyQt6 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 
 from beeref import constants
 from beeref.assets import BeeAssets
