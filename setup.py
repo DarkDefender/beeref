@@ -21,6 +21,10 @@ setup(
         'beeref.documentation',
         'beeref.fileio',
     ],
+    data_files = [
+        ('share/applications', ['BeeRef.desktop']),
+        ('share/icons/hicolor/scalable/apps/', ['beeref/assets/beeref.svg']),
+    ],
     entry_points={
         'gui_scripts': [
             'beeref = beeref.__main__:main'
