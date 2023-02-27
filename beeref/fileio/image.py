@@ -38,7 +38,8 @@ def exif_rotated_image(path=None):
     try:
         exif_dict = piexif.load(path)
     except:
-        logger.exception(f'Exif parser failed on image: {path}')
+        # Not all image formats has exif data
+        logger.debug(f'Exif parser failed on image: {path}')
         return img
 
     if piexif.ImageIFD.Orientation in exif_dict['0th']:
