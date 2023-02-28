@@ -385,6 +385,17 @@ class BeeGraphicsView(MainControlsMixin,
         else:
             self.do_save(self.filename, create_new=False)
 
+    def on_action_export(self):
+        self.scene.cancel_crop_mode()
+        filename, f = QtWidgets.QFileDialog.getSaveFileName(
+            parent=self,
+            caption='Export file',
+            filter=f'Portable Network Graphics File (*.png)')
+        if filename:
+            if not filename.endswith('.png'):
+                filename = f'{filename}.png'
+            self.scene.scene_to_image(filename)
+
     def on_action_quit(self):
         logger.info('User quit. Exiting...')
         self.app.quit()

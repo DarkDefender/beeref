@@ -28,6 +28,7 @@ menu_structure = [
             MENU_SEPARATOR,
             'save',
             'save_as',
+            'export',
             MENU_SEPARATOR,
             'quit',
         ],

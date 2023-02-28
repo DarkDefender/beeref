@@ -17,7 +17,7 @@ from queue import Queue
 import logging
 import math
 
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtCore import Qt
 
 import rpack
@@ -364,6 +364,29 @@ class BeeGraphicsScene(QtWidgets.QGraphicsScene):
         if user_only:
             return list(filter(lambda i: hasattr(i, 'save_id'), items))
         return items
+
+    def scene_to_image(self, filename):
+        # Get region of scene to capture from somewhere.
+        area = self.itemsBoundingRect()
+
+        # Create a QImage to render to and fix up a QPainter for it.
+        image = QtGui.QImage(area.size().toSize(), QtGui.QImage.Format_ARGB32_Premultiplied)
+        painter = QtGui.QPainter(image)
+        image_rectf = QtCore.QRectF(image.rect())
+
+        # Deselect to ensure no gizmos are drawn in the exported image
+        items = self.selectedItems(user_only=True)
+        self.set_selected_all_items(False)
+        # Render the region of interest to the QImage.
+        self.render(painter, image_rectf, area)
+        painter.end()
+
+        # Restore selection
+        for item in items:
+            item.setSelected(True)
+
+        # Save the image to a file.
+        image.save(filename)
 
     def items_for_save(self):
 

@@ -33,6 +33,11 @@ actions = [
         'callback': 'on_action_save_as',
     },
     {
+        'id': 'export',
+        'text': '&Export To Image...',
+        'callback': 'on_action_export',
+    },
+    {
         'id': 'quit',
         'text': '&Quit',
         'shortcuts': ['Ctrl+Q'],
