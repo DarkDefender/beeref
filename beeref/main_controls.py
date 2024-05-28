@@ -92,7 +92,17 @@ class MainControlsMixin:
         logger.debug(f'Handling file drop: {mimedata.formats()}')
         pos = QtCore.QPoint(round(event.position().x()),
                             round(event.position().y()))
-        if mimedata.hasUrls():
+        # Check for image data first because it seems like Firefox and Chrome
+        # creates urls pointing to the webpage the images came from, but not the image itself.
+        # So if the drop event has image data, use that instead of trying to load it from the
+        # provided URLs to avoid any issues.
+        if mimedata.hasImage():
+            img = QtGui.QImage(mimedata.imageData())
+            item = BeePixmapItem(img)
+            pos = self.control_target.mapToScene(pos)
+            self.control_target.undo_stack.push(
+                commands.InsertItems(self.control_target.scene, [item], pos))
+        elif mimedata.hasUrls():
             logger.debug(f'Found dropped urls: {mimedata.urls()}')
             if not self.control_target.scene.items():
                 # Check if we have a bee file we can open directly
@@ -102,12 +112,6 @@ class MainControlsMixin:
                     self.control_target.open_from_file(path.toLocalFile())
                     return
             self.control_target.do_insert_images(mimedata.urls(), pos)
-        elif mimedata.hasImage():
-            img = QtGui.QImage(mimedata.imageData())
-            item = BeePixmapItem(img)
-            pos = self.control_target.mapToScene(pos)
-            self.control_target.undo_stack.push(
-                commands.InsertItems(self.control_target.scene, [item], pos))
         else:
             logger.info('Drop not an image')
 
